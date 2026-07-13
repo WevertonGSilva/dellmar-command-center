@@ -499,6 +499,7 @@ function TorreOperacional() {
           <FiltersBar />
         </div>
 
+        <main className="mt-8 space-y-10">
         {/* Seção 1 · Indicadores de Entrega */}
         <SectionHeader
           eyebrow="Nível 1"
