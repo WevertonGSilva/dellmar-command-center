@@ -442,6 +442,30 @@ function useNow() {
   return now;
 }
 
+function SectionHeader({
+  eyebrow,
+  title,
+  description,
+}: {
+  eyebrow: string;
+  title: string;
+  description?: string;
+}) {
+  return (
+    <div className="mt-10 flex items-end justify-between gap-4 border-b border-border pb-3 first:mt-0">
+      <div>
+        <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-primary">
+          {eyebrow}
+        </p>
+        <h2 className="mt-1 text-lg font-semibold tracking-tight">{title}</h2>
+      </div>
+      {description && (
+        <p className="hidden text-sm text-muted-foreground md:block">{description}</p>
+      )}
+    </div>
+  );
+}
+
 function TorreOperacional() {
   const now = useNow();
   const timeString = useMemo(
@@ -499,18 +523,32 @@ function TorreOperacional() {
           <FiltersBar />
         </div>
 
-        {/* Grid */}
-        <main className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4 lg:gap-5">
+        <main className="mt-8 space-y-10">
+        {/* Seção 1 · Indicadores de Entrega */}
+        <SectionHeader
+          eyebrow="Nível 1"
+          title="Indicadores de Entrega"
+          description="Visão consolidada de OTD por cliente e por rota"
+        />
+        <section className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-5 lg:gap-5">
           <div className="lg:col-span-2">
             <OTDClienteCard />
           </div>
-          <div className="lg:col-span-2 lg:row-span-2">
+          <div className="lg:col-span-3">
             <OTDRotasCard />
           </div>
+        </section>
 
+        {/* Seção 2 · Tempos Operacionais */}
+        <SectionHeader
+          eyebrow="Nível 2"
+          title="Tempos Operacionais"
+          description="Ciclos médios das operações-chave"
+        />
+        <section className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5">
           <TimeMetric
             icon={PackageOpen}
-            title="Tempo Médio de Carregamento"
+            title="Carregamento"
             value="2h 14"
             unit="min"
             target="≤ 2h"
@@ -519,17 +557,16 @@ function TorreOperacional() {
           />
           <TimeMetric
             icon={PackageCheck}
-            title="Tempo Médio de Descarregamento"
+            title="Descarregamento"
             value="1h 48"
             unit="min"
             target="≤ 2h"
             status="success"
             trend={{ direction: "down", value: "-12 min" }}
           />
-
           <TimeMetric
             icon={Wrench}
-            title="Tempo Médio de Manutenção"
+            title="Manutenção"
             value="6h 32"
             unit="min"
             target="≤ 5h"
@@ -538,84 +575,88 @@ function TorreOperacional() {
           />
           <TimeMetric
             icon={Timer}
-            title="Tempo Médio para Emissão"
+            title="Emissão de Documentos"
             value="38"
             unit="min"
             target="≤ 30 min"
             status="warning"
             trend={{ direction: "down", value: "-4 min" }}
           />
+        </section>
 
-          <div className="lg:col-span-2">
-            <ViagensAtrasadasCard />
-          </div>
-
-          <div className="lg:col-span-2">
-            <Card>
-              <CardHeader
-                icon={RefreshCw}
-                title="Descarga → Novo Carregamento"
-                subtitle="Tempo de giro entre operações"
-                right={<StatusPill status="success" />}
-              />
-              <div className="flex items-end justify-between gap-6">
-                <div>
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-6xl font-semibold tracking-tight tabular-nums">
-                      9h 12
-                    </span>
-                    <span className="text-lg font-medium text-muted-foreground">
-                      min
-                    </span>
-                  </div>
-                  <div className="mt-3 flex items-center gap-3 text-sm">
-                    <Trend direction="down" value="-38 min vs semana" goodWhen="down" />
-                    <span className="text-muted-foreground">Meta: ≤ 10h</span>
-                  </div>
+        {/* Seção 3 · Fluxo de Viagens */}
+        <SectionHeader
+          eyebrow="Nível 3"
+          title="Fluxo de Viagens"
+          description="Aderência a prazos e giro entre operações"
+        />
+        <section className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-5">
+          <ViagensAtrasadasCard />
+          <Card>
+            <CardHeader
+              icon={RefreshCw}
+              title="Descarga → Novo Carregamento"
+              subtitle="Tempo de giro entre operações"
+              right={<StatusPill status="success" />}
+            />
+            <div className="flex items-end justify-between gap-6">
+              <div>
+                <div className="flex items-baseline gap-2">
+                  <span className="text-6xl font-semibold tracking-tight tabular-nums">
+                    9h 12
+                  </span>
+                  <span className="text-lg font-medium text-muted-foreground">
+                    min
+                  </span>
                 </div>
-
-                <div className="hidden items-end gap-1.5 md:flex">
-                  {[7, 9, 6, 10, 8, 7, 9, 11, 8, 6, 7, 9].map((h, i) => (
-                    <div
-                      key={i}
-                      className="w-2 rounded-full bg-primary/70"
-                      style={{ height: `${h * 6}px` }}
-                    />
-                  ))}
+                <div className="mt-3 flex items-center gap-3 text-sm">
+                  <Trend direction="down" value="-38 min vs semana" goodWhen="down" />
+                  <span className="text-muted-foreground">Meta: ≤ 10h</span>
                 </div>
               </div>
-              <div className="mt-6 grid grid-cols-3 gap-3 border-t border-border pt-5">
-                <div>
-                  <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
-                    Melhor filial
-                  </p>
-                  <p className="mt-1 flex items-center gap-1.5 text-base font-semibold">
-                    Extrema{" "}
-                    <ArrowDownRight className="h-4 w-4 text-success" strokeWidth={2} />
-                  </p>
-                  <p className="text-xs text-muted-foreground">6h 40 min</p>
-                </div>
-                <div>
-                  <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
-                    Pior filial
-                  </p>
-                  <p className="mt-1 flex items-center gap-1.5 text-base font-semibold">
-                    Fortaleza{" "}
-                    <ArrowUpRight className="h-4 w-4 text-danger" strokeWidth={2} />
-                  </p>
-                  <p className="text-xs text-muted-foreground">14h 22 min</p>
-                </div>
-                <div>
-                  <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
-                    Frota parada
-                  </p>
-                  <p className="mt-1 text-base font-semibold tabular-nums">18 veículos</p>
-                  <p className="text-xs text-muted-foreground">3.2% da frota</p>
-                </div>
+              <div className="hidden items-end gap-1.5 md:flex">
+                {[7, 9, 6, 10, 8, 7, 9, 11, 8, 6, 7, 9].map((h, i) => (
+                  <div
+                    key={i}
+                    className="w-2 rounded-full bg-primary/70"
+                    style={{ height: `${h * 6}px` }}
+                  />
+                ))}
               </div>
-            </Card>
-          </div>
+            </div>
+            <div className="mt-6 grid grid-cols-3 gap-3 border-t border-border pt-5">
+              <div>
+                <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                  Melhor filial
+                </p>
+                <p className="mt-1 flex items-center gap-1.5 text-base font-semibold">
+                  Extrema{" "}
+                  <ArrowDownRight className="h-4 w-4 text-success" strokeWidth={2} />
+                </p>
+                <p className="text-xs text-muted-foreground">6h 40 min</p>
+              </div>
+              <div>
+                <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                  Pior filial
+                </p>
+                <p className="mt-1 flex items-center gap-1.5 text-base font-semibold">
+                  Fortaleza{" "}
+                  <ArrowUpRight className="h-4 w-4 text-danger" strokeWidth={2} />
+                </p>
+                <p className="text-xs text-muted-foreground">14h 22 min</p>
+              </div>
+              <div>
+                <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                  Frota parada
+                </p>
+                <p className="mt-1 text-base font-semibold tabular-nums">18 veículos</p>
+                <p className="text-xs text-muted-foreground">3.2% da frota</p>
+              </div>
+            </div>
+          </Card>
+        </section>
         </main>
+
 
         <footer className="mt-8 flex items-center justify-between border-t border-border pt-4 text-xs text-muted-foreground">
           <span>Torre Operacional Dellmar · v1.0</span>
