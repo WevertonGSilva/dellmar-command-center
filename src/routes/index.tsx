@@ -631,6 +631,8 @@ function TorreOperacional() {
             </div>
           </Card>
         </section>
+        </main>
+
 
         <footer className="mt-8 flex items-center justify-between border-t border-border pt-4 text-xs text-muted-foreground">
           <span>Torre Operacional Dellmar · v1.0</span>
