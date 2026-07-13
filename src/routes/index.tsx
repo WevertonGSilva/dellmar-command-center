@@ -442,6 +442,30 @@ function useNow() {
   return now;
 }
 
+function SectionHeader({
+  eyebrow,
+  title,
+  description,
+}: {
+  eyebrow: string;
+  title: string;
+  description?: string;
+}) {
+  return (
+    <div className="mt-10 flex items-end justify-between gap-4 border-b border-border pb-3 first:mt-0">
+      <div>
+        <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-primary">
+          {eyebrow}
+        </p>
+        <h2 className="mt-1 text-lg font-semibold tracking-tight">{title}</h2>
+      </div>
+      {description && (
+        <p className="hidden text-sm text-muted-foreground md:block">{description}</p>
+      )}
+    </div>
+  );
+}
+
 function TorreOperacional() {
   const now = useNow();
   const timeString = useMemo(
