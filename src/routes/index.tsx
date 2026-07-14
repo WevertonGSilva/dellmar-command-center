@@ -1268,10 +1268,10 @@ function TorreOperacional() {
           {/* Seção 1 · Indicadores de Entrega */}
           <section className="grid grid-cols-1 items-stretch gap-3 md:grid-cols-5">
             <div className="h-full md:col-span-2">
-              <OTDClienteCard />
+              <OTDRotasCard />
             </div>
             <div className="h-full md:col-span-3">
-              <OTDRotasCard />
+              <OTDClienteCard />
             </div>
           </section>
 
