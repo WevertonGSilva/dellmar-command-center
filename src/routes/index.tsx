@@ -6,6 +6,7 @@ import {
   ChevronDown,
   ChevronUp,
   Clock,
+  Download,
   Filter,
   MinusIcon,
   PackageCheck,
@@ -32,6 +33,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { exportToXlsx } from "@/lib/export-xlsx";
 
 export const Route = createFileRoute("/")({
   component: TorreOperacional,
@@ -436,14 +438,31 @@ function Card({
 
       {analytics && (
         <Dialog open={analyticsOpen} onOpenChange={setAnalyticsOpen}>
-          <DialogContent className="max-h-[85vh] max-w-[calc(100vw-2rem)] overflow-hidden sm:max-w-4xl">
-            <DialogHeader className="pr-8">
-              <DialogTitle>{analytics.title}</DialogTitle>
-              <DialogDescription>
-                {analytics.description ?? "Detalhamento analítico dos dados exibidos no indicador."}
-              </DialogDescription>
-            </DialogHeader>
-            <div className="max-h-[65vh] overflow-auto rounded-xl border border-border">
+          <DialogContent className="h-[90vh] w-[96vw] max-w-[96vw] grid-rows-[auto_minmax(0,1fr)] overflow-hidden p-4 sm:max-w-[96vw] sm:p-6">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+              <DialogHeader className="pr-8">
+                <DialogTitle>{analytics.title}</DialogTitle>
+                <DialogDescription>
+                  {analytics.description ??
+                    "Detalhamento analítico dos dados exibidos no indicador."}
+                </DialogDescription>
+              </DialogHeader>
+              <button
+                type="button"
+                onClick={() =>
+                  exportToXlsx(
+                    analytics.title,
+                    analytics.columns.map((column) => column.label),
+                    analytics.rows,
+                  )
+                }
+                className="mr-8 inline-flex h-9 shrink-0 items-center justify-center gap-2 self-start rounded-lg bg-primary px-3.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 sm:self-auto"
+              >
+                <Download className="h-4 w-4" strokeWidth={1.75} />
+                Extrair XLSX
+              </button>
+            </div>
+            <div className="min-h-0 overflow-auto rounded-xl border border-border">
               <Table className="min-w-max">
                 <TableHeader className="sticky top-0 z-10 bg-muted">
                   <TableRow>
