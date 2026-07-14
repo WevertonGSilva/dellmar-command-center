@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import {
+  Activity,
   ArrowDownRight,
   ArrowUpRight,
   ChevronDown,
@@ -580,26 +581,24 @@ function TimeMetric({
 }
 
 // ----- OTD por Origem/Destino -----
-type Rota = { origem: string; destino: string; otd: number; viagens: number };
+const destinosMatriz = ["Fortaleza", "Recife", "Salvador", "Curitiba", "Rio", "Goiânia"];
 
-const rotas: Rota[] = [
-  { origem: "Guarulhos", destino: "Fortaleza", otd: 68.2, viagens: 42 },
-  { origem: "Cajamar", destino: "Recife", otd: 74.5, viagens: 38 },
-  { origem: "Osasco", destino: "Salvador", otd: 81.9, viagens: 55 },
-  { origem: "Ribeirão Preto", destino: "Goiânia", otd: 86.4, viagens: 64 },
-  { origem: "Extrema", destino: "Rio de Janeiro", otd: 91.7, viagens: 128 },
-  { origem: "Campinas", destino: "Belo Horizonte", otd: 94.1, viagens: 96 },
-  { origem: "São Paulo", destino: "Curitiba", otd: 96.8, viagens: 152 },
+const otdMatriz = [
+  { origem: "São Paulo", valores: [88, 91, 89, 96.8, 93, 90] },
+  { origem: "Campinas", valores: [84, 86, 90, 92, 94.1, 88] },
+  { origem: "Guarulhos", valores: [68.2, 78, 82, 88, 91, 85] },
+  { origem: "Extrema", valores: [90, 92, 89, 94, 91.7, 93] },
+  { origem: "Osasco", valores: [79, 84, 81.9, 90, 87, 86] },
+  { origem: "Ribeirão", valores: [82, 88, 85, 91, 89, 86.4] },
 ];
 
-function otdStatus(v: number): Status {
-  if (v < 80) return "danger";
-  if (v < 90) return "warning";
-  return "success";
+function matrixCellStyle(value: number) {
+  if (value < 80) return "bg-danger text-danger-foreground";
+  if (value < 90) return "bg-warning text-warning-foreground";
+  return "bg-success text-success-foreground";
 }
 
 function OTDRotasCard() {
-  const sorted = [...rotas].sort((a, b) => a.otd - b.otd);
   return (
     <Card
       analytics={{
@@ -698,42 +697,69 @@ function OTDRotasCard() {
       }}
     >
       <CardHeader
-        icon={Truck}
+        icon={Activity}
         title="OTD por Origem × Destino"
-        subtitle="Pior desempenho no topo"
+        subtitle="Matriz de desempenho por rota"
         right={
-          <span className="text-[11px] font-medium text-muted-foreground">
-            {sorted.length} rotas
-          </span>
+          <div className="hidden items-center gap-2 text-[9px] text-muted-foreground xl:flex">
+            <span className="inline-flex items-center gap-1">
+              <span className="h-2 w-2 rounded-full bg-danger" />
+              &lt;80%
+            </span>
+            <span className="inline-flex items-center gap-1">
+              <span className="h-2 w-2 rounded-full bg-warning" />
+              80–89%
+            </span>
+            <span className="inline-flex items-center gap-1">
+              <span className="h-2 w-2 rounded-full bg-success" />
+              ≥90%
+            </span>
+          </div>
         }
       />
-      <div className="-mx-1 mt-1 min-w-0 overflow-hidden">
-        <div className="grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)_3.5rem_4.5rem] gap-x-2 px-1 pb-1 text-[9px] font-semibold uppercase tracking-wider text-muted-foreground sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_4rem_5rem] sm:gap-x-3">
-          <span>Origem</span>
-          <span>Destino</span>
-          <span className="text-right">Viagens</span>
-          <span className="text-right">OTD</span>
-        </div>
-        <div className="divide-y divide-border">
-          {sorted.map((r) => {
-            const s = otdStatus(r.otd);
-            return (
-              <div
-                key={`${r.origem}-${r.destino}`}
-                className="group/row grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)_3.5rem_4.5rem] items-center gap-x-2 px-1 py-1 text-xs transition-colors hover:bg-muted/60 sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_4rem_5rem] sm:gap-x-3"
-              >
-                <span className="truncate font-medium">{r.origem}</span>
-                <span className="truncate text-muted-foreground">{r.destino}</span>
-                <span className="text-right tabular-nums text-muted-foreground">{r.viagens}</span>
+      <div className="mb-2 flex items-center gap-2 text-[9px] text-muted-foreground xl:hidden">
+        <span className="inline-flex items-center gap-1">
+          <span className="h-2 w-2 rounded-full bg-danger" />
+          &lt;80%
+        </span>
+        <span className="inline-flex items-center gap-1">
+          <span className="h-2 w-2 rounded-full bg-warning" />
+          80–89%
+        </span>
+        <span className="inline-flex items-center gap-1">
+          <span className="h-2 w-2 rounded-full bg-success" />
+          ≥90%
+        </span>
+      </div>
+      <div className="min-w-0 overflow-x-auto pb-1">
+        <div className="grid min-w-[460px] grid-cols-[70px_repeat(6,minmax(0,1fr))] gap-1">
+          <span className="flex items-end px-1 pb-1 text-[9px] font-semibold uppercase leading-tight tracking-wider text-muted-foreground">
+            Origem / Destino
+          </span>
+          {destinosMatriz.map((destino) => (
+            <span
+              key={destino}
+              className="flex items-end justify-center px-0.5 pb-1 text-center text-[9px] font-semibold uppercase leading-tight tracking-wide text-muted-foreground"
+            >
+              {destino}
+            </span>
+          ))}
+
+          {otdMatriz.map((rota) => (
+            <div key={rota.origem} className="contents">
+              <span className="flex items-center px-1 text-[10px] font-semibold">
+                {rota.origem}
+              </span>
+              {rota.valores.map((valor, index) => (
                 <span
-                  className={`flex items-center justify-end gap-2 text-right font-semibold tabular-nums ${statusStyles[s].text}`}
+                  key={`${rota.origem}-${destinosMatriz[index]}`}
+                  className={`flex h-6 items-center justify-center rounded-md text-[11px] font-semibold tabular-nums ${matrixCellStyle(valor)}`}
                 >
-                  <span className={`h-1.5 w-1.5 rounded-full ${statusStyles[s].dot}`} />
-                  {r.otd.toFixed(1)}%
+                  {valor.toFixed(valor % 1 === 0 ? 0 : 1)}%
                 </span>
-              </div>
-            );
-          })}
+              ))}
+            </div>
+          ))}
         </div>
       </div>
     </Card>
