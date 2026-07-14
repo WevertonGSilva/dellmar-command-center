@@ -512,11 +512,11 @@ function TorreOperacional() {
             title="Indicadores de Entrega"
             description="Visão consolidada de OTD por cliente e por rota"
           />
-          <section className="mt-4 grid grid-cols-1 items-stretch gap-4 min-[1200px]:grid-cols-12">
-            <div className="h-full min-[1200px]:col-span-4">
+          <section className="mt-4 grid grid-cols-1 items-stretch gap-4 md:grid-cols-5">
+            <div className="h-full md:col-span-2">
               <OTDClienteCard />
             </div>
-            <div className="h-full min-[1200px]:col-span-8">
+            <div className="h-full md:col-span-3">
               <OTDRotasCard />
             </div>
           </section>
@@ -527,51 +527,43 @@ function TorreOperacional() {
             title="Tempos Operacionais"
             description="Ciclos médios das operações-chave"
           />
-          <section className="mt-4 grid grid-cols-1 items-stretch gap-4 md:grid-cols-2 min-[1200px]:grid-cols-12">
-            <div className="h-full min-[1200px]:col-span-3">
-              <TimeMetric
-                icon={PackageOpen}
-                title="Carregamento"
-                value="2h 14"
-                unit="min"
-                target="≤ 2h"
-                status="warning"
-                trend={{ direction: "up", value: "+8 min" }}
-              />
-            </div>
-            <div className="h-full min-[1200px]:col-span-3">
-              <TimeMetric
-                icon={Timer}
-                title="Emissão de Documentos"
-                value="38"
-                unit="min"
-                target="≤ 30 min"
-                status="warning"
-                trend={{ direction: "down", value: "-4 min" }}
-              />
-            </div>
-            <div className="h-full min-[1200px]:col-span-3">
-              <TimeMetric
-                icon={PackageCheck}
-                title="Descarregamento"
-                value="1h 48"
-                unit="min"
-                target="≤ 2h"
-                status="success"
-                trend={{ direction: "down", value: "-12 min" }}
-              />
-            </div>
-            <div className="h-full min-[1200px]:col-span-3">
-              <TimeMetric
-                icon={Wrench}
-                title="Manutenção"
-                value="6h 32"
-                unit="min"
-                target="≤ 5h"
-                status="danger"
-                trend={{ direction: "up", value: "+42 min" }}
-              />
-            </div>
+          <section className="mt-4 grid grid-cols-1 items-stretch gap-4 md:grid-cols-2 xl:grid-cols-4">
+            <TimeMetric
+              icon={PackageOpen}
+              title="Carregamento"
+              value="2h 14"
+              unit="min"
+              target="≤ 2h"
+              status="warning"
+              trend={{ direction: "up", value: "+8 min" }}
+            />
+            <TimeMetric
+              icon={PackageCheck}
+              title="Descarregamento"
+              value="1h 48"
+              unit="min"
+              target="≤ 2h"
+              status="success"
+              trend={{ direction: "down", value: "-12 min" }}
+            />
+            <TimeMetric
+              icon={Wrench}
+              title="Manutenção"
+              value="6h 32"
+              unit="min"
+              target="≤ 5h"
+              status="danger"
+              trend={{ direction: "up", value: "+42 min" }}
+            />
+            <TimeMetric
+              icon={Timer}
+              title="Emissão de Documentos"
+              value="38"
+              unit="min"
+              target="≤ 30 min"
+              status="warning"
+              trend={{ direction: "down", value: "-4 min" }}
+            />
           </section>
 
           {/* Seção 3 · Fluxo de Viagens */}
@@ -580,42 +572,38 @@ function TorreOperacional() {
             title="Fluxo de Viagens"
             description="Aderência a prazos e giro entre operações"
           />
-          <section className="mt-4 grid grid-cols-1 items-stretch gap-4 min-[1200px]:grid-cols-12">
-            <div className="h-full min-[1200px]:col-span-7">
-              <ViagensAtrasadasCard />
-            </div>
-            <div className="h-full min-[1200px]:col-span-5">
-              <Card>
-                <CardHeader
-                  icon={RefreshCw}
-                  title="Descarga → Novo Carregamento"
-                  subtitle="Tempo de giro entre operações"
-                  right={<StatusPill status="success" />}
-                />
-                <div className="grid grid-cols-1 gap-5 md:grid-cols-2 md:items-end">
-                  <div className="flex min-w-0 flex-col justify-center">
-                    <div className="flex items-baseline gap-2">
-                      <span className="text-5xl font-semibold tracking-tight tabular-nums xl:text-6xl">
-                        9h 12
-                      </span>
-                      <span className="text-lg font-medium text-muted-foreground">min</span>
-                    </div>
-                    <div className="mt-3 flex items-center gap-3 text-sm">
-                      <Trend direction="down" value="-38 min vs semana" goodWhen="down" />
-                      <span className="text-muted-foreground">Meta: ≤ 10h</span>
-                    </div>
+          <section className="mt-4 grid grid-cols-1 gap-4">
+            <ViagensAtrasadasCard />
+            <Card>
+              <CardHeader
+                icon={RefreshCw}
+                title="Descarga → Novo Carregamento"
+                subtitle="Tempo de giro entre operações"
+                right={<StatusPill status="success" />}
+              />
+              <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4 lg:items-stretch">
+                <div className="flex min-w-0 flex-col justify-center">
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-5xl font-semibold tracking-tight tabular-nums xl:text-6xl">
+                      9h 12
+                    </span>
+                    <span className="text-lg font-medium text-muted-foreground">min</span>
                   </div>
-                  <div className="hidden items-end justify-center gap-1.5 md:flex">
-                    {[7, 9, 6, 10, 8, 7, 9, 11, 8, 6, 7, 9].map((h, i) => (
-                      <div
-                        key={i}
-                        className="w-2 rounded-full bg-primary/70"
-                        style={{ height: `${h * 6}px` }}
-                      />
-                    ))}
+                  <div className="mt-3 flex items-center gap-3 text-sm">
+                    <Trend direction="down" value="-38 min vs semana" goodWhen="down" />
+                    <span className="text-muted-foreground">Meta: ≤ 10h</span>
                   </div>
                 </div>
-                <div className="mt-auto grid grid-cols-1 gap-4 border-t border-border pt-5 sm:grid-cols-3">
+                <div className="hidden items-end justify-center gap-1.5 border-l border-border pl-5 md:flex lg:order-3">
+                  {[7, 9, 6, 10, 8, 7, 9, 11, 8, 6, 7, 9].map((h, i) => (
+                    <div
+                      key={i}
+                      className="w-2 rounded-full bg-primary/70"
+                      style={{ height: `${h * 6}px` }}
+                    />
+                  ))}
+                </div>
+                <div className="grid grid-cols-1 gap-4 border-t border-border pt-5 sm:grid-cols-3 md:col-span-2 lg:order-2 lg:border-l lg:border-t-0 lg:py-2 lg:pl-5">
                   <div>
                     <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
                       Melhor filial
@@ -642,8 +630,8 @@ function TorreOperacional() {
                     <p className="text-xs text-muted-foreground">3.2% da frota</p>
                   </div>
                 </div>
-              </Card>
-            </div>
+              </div>
+            </Card>
           </section>
         </main>
 
