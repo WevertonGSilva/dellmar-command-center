@@ -1098,30 +1098,6 @@ function useNow() {
   return now;
 }
 
-function SectionHeader({
-  eyebrow,
-  title,
-  description,
-}: {
-  eyebrow: string;
-  title: string;
-  description?: string;
-}) {
-  return (
-    <div className="mt-5 flex items-end justify-between gap-3 border-b border-border pb-2 first:mt-0">
-      <div>
-        <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-primary">
-          {eyebrow}
-        </p>
-        <h2 className="mt-0.5 text-base font-semibold tracking-tight">{title}</h2>
-      </div>
-      {description && (
-        <p className="hidden text-sm text-muted-foreground md:block">{description}</p>
-      )}
-    </div>
-  );
-}
-
 function TorreOperacional() {
   const now = useNow();
   const timeString = useMemo(
@@ -1179,14 +1155,9 @@ function TorreOperacional() {
           <FiltersBar />
         </div>
 
-        <main className="mt-4">
+        <main className="mt-4 space-y-3">
           {/* Seção 2 · Tempos Operacionais */}
-          <SectionHeader
-            eyebrow="Nível 2"
-            title="Tempos Operacionais"
-            description="Ciclos médios das operações-chave"
-          />
-          <section className="mt-2 grid grid-cols-1 items-stretch gap-3 md:grid-cols-2 xl:grid-cols-4">
+          <section className="grid grid-cols-1 items-stretch gap-3 md:grid-cols-2 xl:grid-cols-4">
             <TimeMetric
               icon={PackageOpen}
               title="Carregamento"
@@ -1230,12 +1201,7 @@ function TorreOperacional() {
           </section>
 
           {/* Seção 1 · Indicadores de Entrega */}
-          <SectionHeader
-            eyebrow="Nível 1"
-            title="Indicadores de Entrega"
-            description="Visão consolidada de OTD por cliente e por rota"
-          />
-          <section className="mt-2 grid grid-cols-1 items-stretch gap-3 md:grid-cols-5">
+          <section className="grid grid-cols-1 items-stretch gap-3 md:grid-cols-5">
             <div className="h-full md:col-span-2">
               <OTDClienteCard />
             </div>
@@ -1245,12 +1211,7 @@ function TorreOperacional() {
           </section>
 
           {/* Seção 3 · Fluxo de Viagens */}
-          <SectionHeader
-            eyebrow="Nível 3"
-            title="Fluxo de Viagens"
-            description="Aderência a prazos e giro entre operações"
-          />
-          <section className="mt-2 grid grid-cols-1 items-stretch gap-3 lg:grid-cols-2">
+          <section className="grid grid-cols-1 items-stretch gap-3 lg:grid-cols-2">
             <ViagensAtrasadasCard />
             <Card
               analytics={{
