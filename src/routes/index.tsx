@@ -412,7 +412,7 @@ function Card({
   return (
     <>
       <div
-        className={`group relative flex h-full min-w-0 flex-col rounded-2xl border border-border bg-card p-5 transition-all ${
+        className={`group relative flex h-full min-w-0 flex-col rounded-2xl border border-border bg-card p-4 transition-all ${
           canOpenAnalytics
             ? "cursor-pointer hover:border-primary/40 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             : ""
@@ -517,10 +517,10 @@ function CardHeader({
   right?: React.ReactNode;
 }) {
   return (
-    <div className="mb-5 flex items-start justify-between gap-3">
-      <div className="flex min-w-0 items-start gap-3">
-        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-muted text-muted-foreground">
-          <Icon className="h-4.5 w-4.5" strokeWidth={1.75} />
+    <div className="mb-4 flex items-start justify-between gap-2.5">
+      <div className="flex min-w-0 items-start gap-2.5">
+        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-muted text-muted-foreground">
+          <Icon className="h-4 w-4" strokeWidth={1.75} />
         </span>
         <div>
           <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
@@ -558,15 +558,15 @@ function TimeMetric({
     <Card analytics={analytics}>
       <CardHeader icon={icon} title={title} right={<StatusPill status={status} />} />
       <div className="flex items-baseline gap-1.5">
-        <span className="text-5xl font-semibold tracking-tight tabular-nums">{value}</span>
-        <span className="text-lg font-medium text-muted-foreground">{unit}</span>
+        <span className="text-4xl font-semibold tracking-tight tabular-nums">{value}</span>
+        <span className="text-base font-medium text-muted-foreground">{unit}</span>
       </div>
-      <div className="mt-auto pt-4">
+      <div className="mt-auto pt-3">
         <div className="flex items-center justify-between gap-3 text-sm">
           <span className="text-muted-foreground">Meta: {target}</span>
           <Trend direction={trend.direction} value={trend.value} goodWhen="down" />
         </div>
-        <div className="mt-4 h-1 w-full overflow-hidden rounded-full bg-muted">
+        <div className="mt-3 h-1 w-full overflow-hidden rounded-full bg-muted">
           <div
             className={`h-full rounded-full ${s.dot}`}
             style={{
@@ -720,7 +720,7 @@ function OTDRotasCard() {
             return (
               <div
                 key={`${r.origem}-${r.destino}`}
-                className="group/row grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)_3.5rem_4.5rem] items-center gap-x-2 px-1 py-2.5 text-sm transition-colors hover:bg-muted/60 sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_4rem_5rem] sm:gap-x-4"
+                className="group/row grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)_3.5rem_4.5rem] items-center gap-x-2 px-1 py-2 text-sm transition-colors hover:bg-muted/60 sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_4rem_5rem] sm:gap-x-4"
               >
                 <span className="truncate font-medium">{r.origem}</span>
                 <span className="truncate text-muted-foreground">{r.destino}</span>
@@ -838,23 +838,23 @@ function OTDClienteCard() {
         right={<StatusPill status={status} />}
       />
       <div className="mt-2 flex items-end gap-3">
-        <span className="text-7xl font-semibold tracking-tight tabular-nums">
+        <span className="text-6xl font-semibold tracking-tight tabular-nums">
           {value.toFixed(1)}
-          <span className="text-3xl text-muted-foreground">%</span>
+          <span className="text-2xl text-muted-foreground">%</span>
         </span>
       </div>
 
-      <div className="mt-4 flex items-center gap-4">
+      <div className="mt-3 flex items-center gap-3">
         <Trend direction="up" value="+1.8 p.p. vs semana anterior" goodWhen="up" />
       </div>
 
-      <div className="mt-auto pt-6">
+      <div className="mt-auto pt-4">
         <div className="flex items-center justify-between text-xs text-muted-foreground">
           <span>0%</span>
           <span className="font-medium text-foreground">Meta {meta}%</span>
           <span>100%</span>
         </div>
-        <div className="relative mt-2 h-2.5 w-full overflow-hidden rounded-full bg-muted">
+        <div className="relative mt-2 h-2 w-full overflow-hidden rounded-full bg-muted">
           <div
             className="h-full rounded-full bg-primary transition-all"
             style={{ width: `${value}%` }}
@@ -866,13 +866,13 @@ function OTDClienteCard() {
         </div>
       </div>
 
-      <div className="mt-5 grid grid-cols-3 gap-3 border-t border-border pt-5">
+      <div className="mt-4 grid grid-cols-3 gap-3 border-t border-border pt-4">
         {periodos.map((k) => (
           <div key={k.label}>
             <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
               {k.label}
             </p>
-            <p className="mt-1 text-xl font-semibold tabular-nums">{k.value}</p>
+            <p className="mt-1 text-lg font-semibold tabular-nums">{k.value}</p>
           </div>
         ))}
       </div>
@@ -988,13 +988,13 @@ function ViagensAtrasadasCard() {
         subtitle="Janela últimas 24h"
         right={<StatusPill status={status} />}
       />
-      <div className="grid grid-cols-1 gap-5 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,2fr)] lg:items-center">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,2fr)] lg:items-center">
         <div>
           <p className="text-[11px] font-semibold uppercase tracking-wider text-success">
             No prazo
           </p>
           <p className="mt-1 flex items-baseline gap-2">
-            <span className="text-5xl font-semibold tabular-nums">{noPrazo}</span>
+            <span className="text-4xl font-semibold tabular-nums">{noPrazo}</span>
             <span className="text-sm font-medium text-muted-foreground">
               {pctPrazo.toFixed(1)}%
             </span>
@@ -1005,7 +1005,7 @@ function ViagensAtrasadasCard() {
             Atrasadas
           </p>
           <p className="mt-1 flex items-baseline gap-2">
-            <span className="text-5xl font-semibold tabular-nums text-danger">{atrasadas}</span>
+            <span className="text-4xl font-semibold tabular-nums text-danger">{atrasadas}</span>
             <span className="text-sm font-medium text-muted-foreground">
               {pctAtraso.toFixed(1)}%
             </span>
@@ -1013,7 +1013,7 @@ function ViagensAtrasadasCard() {
         </div>
 
         <div className="md:col-span-2 lg:col-span-1">
-          <div className="flex h-10 w-full overflow-hidden rounded-xl bg-muted">
+          <div className="flex h-8 w-full overflow-hidden rounded-lg bg-muted">
             <div
               className="flex items-center justify-start bg-success pl-3 text-xs font-semibold text-success-foreground"
               style={{ width: `${pctPrazo}%` }}
@@ -1027,7 +1027,7 @@ function ViagensAtrasadasCard() {
               {pctAtraso.toFixed(0)}%
             </div>
           </div>
-          <div className="mt-3 flex items-center justify-between text-xs text-muted-foreground">
+          <div className="mt-2 flex items-center justify-between text-xs text-muted-foreground">
             <span>Total monitorado: {total} viagens</span>
             <Trend direction="down" value="-4 atrasadas vs ontem" goodWhen="down" />
           </div>
@@ -1339,13 +1339,13 @@ function TorreOperacional() {
                 subtitle="Tempo de giro entre operações"
                 right={<StatusPill status="success" />}
               />
-              <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4 lg:items-stretch">
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4 lg:items-stretch">
                 <div className="flex min-w-0 flex-col justify-center">
                   <div className="flex items-baseline gap-2">
-                    <span className="text-5xl font-semibold tracking-tight tabular-nums xl:text-6xl">
+                    <span className="text-4xl font-semibold tracking-tight tabular-nums">
                       9h 12
                     </span>
-                    <span className="text-lg font-medium text-muted-foreground">min</span>
+                    <span className="text-base font-medium text-muted-foreground">min</span>
                   </div>
                   <div className="mt-3 flex items-center gap-3 text-sm">
                     <Trend direction="down" value="-38 min vs semana" goodWhen="down" />
@@ -1357,11 +1357,11 @@ function TorreOperacional() {
                     <div
                       key={i}
                       className="w-2 rounded-full bg-primary/70"
-                      style={{ height: `${h * 6}px` }}
+                      style={{ height: `${h * 5}px` }}
                     />
                   ))}
                 </div>
-                <div className="grid grid-cols-1 gap-4 border-t border-border pt-5 sm:grid-cols-3 md:col-span-2 lg:order-2 lg:border-l lg:border-t-0 lg:py-2 lg:pl-5">
+                <div className="grid grid-cols-1 gap-3 border-t border-border pt-4 sm:grid-cols-3 md:col-span-2 lg:order-2 lg:border-l lg:border-t-0 lg:py-1 lg:pl-4">
                   <div>
                     <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
                       Melhor filial
