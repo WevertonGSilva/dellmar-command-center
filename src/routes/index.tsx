@@ -741,6 +741,85 @@ function OTDRotasCard() {
 }
 
 // ----- OTD Cliente -----
+function OTDGauge({ value, target }: { value: number; target: number }) {
+  const progress = Math.min(100, Math.max(0, value));
+  const targetAngle = Math.PI - (target / 100) * Math.PI;
+  const targetStart = {
+    x: 100 + 70 * Math.cos(targetAngle),
+    y: 100 - 70 * Math.sin(targetAngle),
+  };
+  const targetEnd = {
+    x: 100 + 88 * Math.cos(targetAngle),
+    y: 100 - 88 * Math.sin(targetAngle),
+  };
+  const distance = Math.abs(target - value).toFixed(1);
+
+  return (
+    <div className="flex min-w-0 flex-col items-center justify-center rounded-lg bg-muted/40 px-2 py-1.5">
+      <p className="text-[9px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+        Desempenho vs meta
+      </p>
+      <svg
+        viewBox="0 0 200 116"
+        className="h-auto w-full max-w-[190px]"
+        role="img"
+        aria-label={`OTD de ${value.toFixed(1)}% para uma meta de ${target}%`}
+      >
+        <title>{`OTD ${value.toFixed(1)}% · Meta ${target}%`}</title>
+        <path
+          d="M 20 100 A 80 80 0 0 1 180 100"
+          fill="none"
+          pathLength="100"
+          className="stroke-muted"
+          strokeWidth="13"
+          strokeLinecap="round"
+        />
+        <path
+          d="M 20 100 A 80 80 0 0 1 180 100"
+          fill="none"
+          pathLength="100"
+          className="stroke-primary"
+          strokeWidth="13"
+          strokeLinecap="round"
+          strokeDasharray={`${progress} ${100 - progress}`}
+        />
+        <line
+          x1={targetStart.x}
+          y1={targetStart.y}
+          x2={targetEnd.x}
+          y2={targetEnd.y}
+          className="stroke-foreground"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+        />
+        <line
+          x1="100"
+          y1="100"
+          x2="28"
+          y2="100"
+          className="stroke-foreground"
+          strokeWidth="3"
+          strokeLinecap="round"
+          transform={`rotate(${progress * 1.8} 100 100)`}
+        />
+        <circle cx="100" cy="100" r="5" className="fill-foreground" />
+        <text x="18" y="114" className="fill-muted-foreground text-[9px]">
+          0%
+        </text>
+        <text x="166" y="114" className="fill-muted-foreground text-[9px]">
+          100%
+        </text>
+      </svg>
+      <div className="-mt-1 flex items-center justify-center gap-2 text-[10px]">
+        <span className="font-semibold text-foreground">Meta {target}%</span>
+        <span className="text-muted-foreground">
+          {value >= target ? `${distance} p.p. acima` : `Faltam ${distance} p.p.`}
+        </span>
+      </div>
+    </div>
+  );
+}
+
 function OTDClienteCard() {
   const value = 92.4;
   const meta = 95;
@@ -837,36 +916,22 @@ function OTDClienteCard() {
         subtitle="On-Time Delivery consolidado"
         right={<StatusPill status={status} />}
       />
-      <div className="mt-2 flex items-end gap-3">
-        <span className="text-5xl font-semibold tracking-tight tabular-nums">
-          {value.toFixed(1)}
-          <span className="text-xl text-muted-foreground">%</span>
-        </span>
-      </div>
-
-      <div className="mt-2 flex items-center gap-2">
-        <Trend direction="up" value="+1.8 p.p. vs semana anterior" goodWhen="up" />
-      </div>
-
-      <div className="mt-auto pt-3">
-        <div className="flex items-center justify-between text-xs text-muted-foreground">
-          <span>0%</span>
-          <span className="font-medium text-foreground">Meta {meta}%</span>
-          <span>100%</span>
+      <div className="grid flex-1 grid-cols-1 items-center gap-3 sm:grid-cols-[minmax(0,1fr)_minmax(150px,0.9fr)]">
+        <div className="min-w-0">
+          <div className="flex items-end gap-2">
+            <span className="text-6xl font-semibold tracking-tight tabular-nums">
+              {value.toFixed(1)}
+              <span className="text-2xl text-muted-foreground">%</span>
+            </span>
+          </div>
+          <div className="mt-2 flex items-center gap-2">
+            <Trend direction="up" value="+1.8 p.p. vs semana anterior" goodWhen="up" />
+          </div>
         </div>
-        <div className="relative mt-2 h-2 w-full overflow-hidden rounded-full bg-muted">
-          <div
-            className="h-full rounded-full bg-primary transition-all"
-            style={{ width: `${value}%` }}
-          />
-          <div
-            className="absolute top-0 h-full w-0.5 bg-foreground/80"
-            style={{ left: `${meta}%` }}
-          />
-        </div>
+        <OTDGauge value={value} target={meta} />
       </div>
 
-      <div className="mt-3 grid grid-cols-3 gap-2 border-t border-border pt-3">
+      <div className="mt-2 grid grid-cols-3 gap-2 border-t border-border pt-2.5">
         {periodos.map((k) => (
           <div key={k.label}>
             <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
