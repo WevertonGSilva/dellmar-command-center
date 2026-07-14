@@ -217,7 +217,7 @@ function OTDRotasCard() {
             return (
               <div
                 key={`${r.origem}-${r.destino}`}
-                className="group/row grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)_3.5rem_4.5rem] items-center gap-x-2 px-1 py-1.5 text-sm transition-colors hover:bg-muted/60 sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_4rem_5rem] sm:gap-x-4"
+                className="group/row grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)_3.5rem_4.5rem] items-center gap-x-2 px-1 py-2.5 text-sm transition-colors hover:bg-muted/60 sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_4rem_5rem] sm:gap-x-4"
               >
                 <span className="truncate font-medium">{r.origem}</span>
                 <span className="truncate text-muted-foreground">{r.destino}</span>
@@ -257,11 +257,11 @@ function OTDClienteCard() {
         </span>
       </div>
 
-      <div className="mt-3 flex items-center gap-4">
+      <div className="mt-4 flex items-center gap-4">
         <Trend direction="up" value="+1.8 p.p. vs semana anterior" goodWhen="up" />
       </div>
 
-      <div className="mt-auto pt-4">
+      <div className="mt-auto pt-6">
         <div className="flex items-center justify-between text-xs text-muted-foreground">
           <span>0%</span>
           <span className="font-medium text-foreground">Meta {meta}%</span>
@@ -279,7 +279,7 @@ function OTDClienteCard() {
         </div>
       </div>
 
-      <div className="mt-4 grid grid-cols-3 gap-3 border-t border-border pt-4">
+      <div className="mt-5 grid grid-cols-3 gap-3 border-t border-border pt-5">
         {[
           { label: "Hoje", value: "94.1%" },
           { label: "Semana", value: "92.4%" },
