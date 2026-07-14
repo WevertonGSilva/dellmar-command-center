@@ -17,6 +17,21 @@ import {
   Truck,
   Wrench,
 } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 export const Route = createFileRoute("/")({
   component: TorreOperacional,
@@ -79,23 +94,101 @@ function Trend({
   );
 }
 
+type AnalyticalTable = {
+  title: string;
+  description?: string;
+  columns: Array<{ label: string; numeric?: boolean }>;
+  rows: string[][];
+};
+
 function Card({
   children,
   className = "",
   interactive = true,
+  analytics,
 }: {
   children: React.ReactNode;
   className?: string;
   interactive?: boolean;
+  analytics?: AnalyticalTable;
 }) {
+  const [analyticsOpen, setAnalyticsOpen] = useState(false);
+  const canOpenAnalytics = interactive && Boolean(analytics);
+
   return (
-    <div
-      className={`group relative flex h-full min-w-0 flex-col rounded-2xl border border-border bg-card p-5 transition-all ${
-        interactive ? "cursor-pointer hover:border-primary/40 hover:-translate-y-0.5" : ""
-      } ${className}`}
-    >
-      {children}
-    </div>
+    <>
+      <div
+        className={`group relative flex h-full min-w-0 flex-col rounded-2xl border border-border bg-card p-5 transition-all ${
+          canOpenAnalytics
+            ? "cursor-pointer hover:border-primary/40 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            : ""
+        } ${className}`}
+        onClick={canOpenAnalytics ? () => setAnalyticsOpen(true) : undefined}
+        onKeyDown={
+          canOpenAnalytics
+            ? (event) => {
+                if (event.key === "Enter" || event.key === " ") {
+                  event.preventDefault();
+                  setAnalyticsOpen(true);
+                }
+              }
+            : undefined
+        }
+        role={canOpenAnalytics ? "button" : undefined}
+        tabIndex={canOpenAnalytics ? 0 : undefined}
+        aria-haspopup={canOpenAnalytics ? "dialog" : undefined}
+        aria-label={analytics ? `Abrir análise de ${analytics.title}` : undefined}
+      >
+        {children}
+      </div>
+
+      {analytics && (
+        <Dialog open={analyticsOpen} onOpenChange={setAnalyticsOpen}>
+          <DialogContent className="max-h-[85vh] max-w-[calc(100vw-2rem)] overflow-hidden sm:max-w-4xl">
+            <DialogHeader className="pr-8">
+              <DialogTitle>{analytics.title}</DialogTitle>
+              <DialogDescription>
+                {analytics.description ?? "Detalhamento analítico dos dados exibidos no indicador."}
+              </DialogDescription>
+            </DialogHeader>
+            <div className="max-h-[65vh] overflow-auto rounded-xl border border-border">
+              <Table>
+                <TableHeader className="sticky top-0 z-10 bg-muted">
+                  <TableRow>
+                    {analytics.columns.map((column) => (
+                      <TableHead
+                        key={column.label}
+                        className={column.numeric ? "text-right" : undefined}
+                      >
+                        {column.label}
+                      </TableHead>
+                    ))}
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {analytics.rows.map((row, rowIndex) => (
+                    <TableRow key={`${analytics.title}-${rowIndex}`}>
+                      {row.map((cell, cellIndex) => (
+                        <TableCell
+                          key={`${rowIndex}-${analytics.columns[cellIndex]?.label}`}
+                          className={
+                            analytics.columns[cellIndex]?.numeric
+                              ? "text-right tabular-nums"
+                              : undefined
+                          }
+                        >
+                          {cell}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+          </DialogContent>
+        </Dialog>
+      )}
+    </>
   );
 }
 
@@ -147,7 +240,19 @@ function TimeMetric({
 }) {
   const s = statusStyles[status];
   return (
-    <Card>
+    <Card
+      analytics={{
+        title,
+        columns: [{ label: "Campo" }, { label: "Informação" }],
+        rows: [
+          ["Indicador", title],
+          ["Valor atual", `${value} ${unit}`],
+          ["Meta", target],
+          ["Variação", trend.value],
+          ["Status", s.label],
+        ],
+      }}
+    >
       <CardHeader icon={icon} title={title} right={<StatusPill status={status} />} />
       <div className="flex items-baseline gap-1.5">
         <span className="text-5xl font-semibold tracking-tight tabular-nums">{value}</span>
@@ -193,7 +298,25 @@ function otdStatus(v: number): Status {
 function OTDRotasCard() {
   const sorted = [...rotas].sort((a, b) => a.otd - b.otd);
   return (
-    <Card>
+    <Card
+      analytics={{
+        title: "OTD por Origem × Destino",
+        columns: [
+          { label: "Origem" },
+          { label: "Destino" },
+          { label: "Viagens", numeric: true },
+          { label: "OTD", numeric: true },
+          { label: "Status" },
+        ],
+        rows: sorted.map((rota) => [
+          rota.origem,
+          rota.destino,
+          rota.viagens.toString(),
+          `${rota.otd.toFixed(1)}%`,
+          statusStyles[otdStatus(rota.otd)].label,
+        ]),
+      }}
+    >
       <CardHeader
         icon={Truck}
         title="OTD por Origem × Destino"
@@ -242,8 +365,23 @@ function OTDClienteCard() {
   const value = 92.4;
   const meta = 95;
   const status: Status = value >= meta ? "success" : value >= 90 ? "warning" : "danger";
+  const periodos = [
+    { label: "Hoje", value: "94.1%" },
+    { label: "Semana", value: "92.4%" },
+    { label: "Mês", value: "91.6%" },
+  ];
   return (
-    <Card>
+    <Card
+      analytics={{
+        title: "OTD Cliente",
+        columns: [
+          { label: "Período" },
+          { label: "OTD", numeric: true },
+          { label: "Meta", numeric: true },
+        ],
+        rows: periodos.map((periodo) => [periodo.label, periodo.value, `${meta}%`]),
+      }}
+    >
       <CardHeader
         icon={PackageCheck}
         title="OTD Cliente"
@@ -280,11 +418,7 @@ function OTDClienteCard() {
       </div>
 
       <div className="mt-5 grid grid-cols-3 gap-3 border-t border-border pt-5">
-        {[
-          { label: "Hoje", value: "94.1%" },
-          { label: "Semana", value: "92.4%" },
-          { label: "Mês", value: "91.6%" },
-        ].map((k) => (
+        {periodos.map((k) => (
           <div key={k.label}>
             <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
               {k.label}
@@ -307,7 +441,22 @@ function ViagensAtrasadasCard() {
   const status: Status = pctAtraso > 15 ? "danger" : pctAtraso > 8 ? "warning" : "success";
 
   return (
-    <Card>
+    <Card
+      analytics={{
+        title: "Viagens · Prazo vs Atraso",
+        columns: [
+          { label: "Situação" },
+          { label: "Viagens", numeric: true },
+          { label: "Participação", numeric: true },
+          { label: "Comparação" },
+        ],
+        rows: [
+          ["No prazo", noPrazo.toString(), `${pctPrazo.toFixed(1)}%`, "—"],
+          ["Atrasadas", atrasadas.toString(), `${pctAtraso.toFixed(1)}%`, "-4 atrasadas vs ontem"],
+          ["Total monitorado", total.toString(), "100%", "—"],
+        ],
+      }}
+    >
       <CardHeader
         icon={Clock}
         title="Viagens · Prazo vs Atraso"
@@ -574,7 +723,23 @@ function TorreOperacional() {
           />
           <section className="mt-4 grid grid-cols-1 gap-4">
             <ViagensAtrasadasCard />
-            <Card>
+            <Card
+              analytics={{
+                title: "Descarga → Novo Carregamento",
+                columns: [
+                  { label: "Referência" },
+                  { label: "Resultado" },
+                  { label: "Detalhamento" },
+                  { label: "Comparação" },
+                ],
+                rows: [
+                  ["Consolidado", "9h 12 min", "Meta: ≤ 10h", "-38 min vs semana"],
+                  ["Melhor filial", "Extrema", "6h 40 min", "—"],
+                  ["Pior filial", "Fortaleza", "14h 22 min", "—"],
+                  ["Frota parada", "18 veículos", "3.2% da frota", "—"],
+                ],
+              }}
+            >
               <CardHeader
                 icon={RefreshCw}
                 title="Descarga → Novo Carregamento"
