@@ -101,6 +101,298 @@ type AnalyticalTable = {
   rows: string[][];
 };
 
+const carregamentoAnalytics: AnalyticalTable = {
+  title: "Analítico de Carregamento por Veículo",
+  description: "Veículos em operação de carregamento e seus respectivos tempos.",
+  columns: [
+    { label: "Veículo" },
+    { label: "MDF-e" },
+    { label: "Cliente" },
+    { label: "Remetente" },
+    { label: "Destinatário" },
+    { label: "Início do carregamento" },
+    { label: "Fim do carregamento" },
+    { label: "Tempo de carregamento" },
+    { label: "Status" },
+  ],
+  rows: [
+    [
+      "RVM-4A82",
+      "48219",
+      "Nestlé",
+      "CD Cajamar",
+      "Atacadão Fortaleza",
+      "14/07/2026 05:42",
+      "14/07/2026 07:51",
+      "2h 09 min",
+      "Concluído",
+    ],
+    [
+      "GHT-7C21",
+      "48227",
+      "Ambev",
+      "Fábrica Guarulhos",
+      "CD Recife",
+      "14/07/2026 06:05",
+      "14/07/2026 08:31",
+      "2h 26 min",
+      "Concluído",
+    ],
+    [
+      "FDP-9B14",
+      "48234",
+      "Unilever",
+      "CD Osasco",
+      "Distribuidor Salvador",
+      "14/07/2026 06:48",
+      "14/07/2026 09:02",
+      "2h 14 min",
+      "Concluído",
+    ],
+    [
+      "TLM-2E63",
+      "48241",
+      "P&G",
+      "Planta Louveira",
+      "CD Goiânia",
+      "14/07/2026 07:20",
+      "—",
+      "2h 38 min",
+      "Em andamento",
+    ],
+    [
+      "QXZ-8D40",
+      "48256",
+      "Danone",
+      "CD Extrema",
+      "Rede Rio",
+      "14/07/2026 08:12",
+      "—",
+      "1h 47 min",
+      "Em andamento",
+    ],
+  ],
+};
+
+const emissaoDocumentosAnalytics: AnalyticalTable = {
+  title: "Analítico de Emissão de Documentos por Veículo",
+  description: "Solicitação e emissão do MDF-e para cada veículo liberado.",
+  columns: [
+    { label: "Veículo" },
+    { label: "MDF-e" },
+    { label: "Cliente" },
+    { label: "Remetente" },
+    { label: "Destinatário" },
+    { label: "Solicitação" },
+    { label: "Emissão" },
+    { label: "Tempo de emissão" },
+    { label: "Status" },
+  ],
+  rows: [
+    [
+      "LPR-6F18",
+      "48261",
+      "Coca-Cola",
+      "Fábrica Jundiaí",
+      "CD Curitiba",
+      "14/07/2026 07:12",
+      "14/07/2026 07:43",
+      "31 min",
+      "Emitido",
+    ],
+    [
+      "EJK-3H72",
+      "48268",
+      "Heineken",
+      "CD Itu",
+      "Distribuidor BH",
+      "14/07/2026 07:28",
+      "14/07/2026 08:04",
+      "36 min",
+      "Emitido",
+    ],
+    [
+      "NBD-5C09",
+      "48273",
+      "PepsiCo",
+      "CD Sorocaba",
+      "CD Recife",
+      "14/07/2026 08:01",
+      "14/07/2026 08:43",
+      "42 min",
+      "Emitido",
+    ],
+    [
+      "AXM-8J44",
+      "48280",
+      "BRF",
+      "Unidade Campinas",
+      "CD Salvador",
+      "14/07/2026 08:22",
+      "14/07/2026 09:00",
+      "38 min",
+      "Emitido",
+    ],
+    [
+      "KQS-2A57",
+      "Pendente",
+      "JBS",
+      "Unidade Lins",
+      "CD Fortaleza",
+      "14/07/2026 08:47",
+      "—",
+      "51 min",
+      "Em validação",
+    ],
+  ],
+};
+
+const descarregamentoAnalytics: AnalyticalTable = {
+  title: "Analítico de Descarregamento por Veículo",
+  description: "Veículos em descarga, documentos vinculados e tempos da operação.",
+  columns: [
+    { label: "Veículo" },
+    { label: "MDF-e" },
+    { label: "Cliente" },
+    { label: "Remetente" },
+    { label: "Destinatário" },
+    { label: "Início da descarga" },
+    { label: "Fim da descarga" },
+    { label: "Tempo de descarga" },
+    { label: "Status" },
+  ],
+  rows: [
+    [
+      "BCD-1K93",
+      "48172",
+      "Nestlé",
+      "CD Cajamar",
+      "Atacadão Fortaleza",
+      "14/07/2026 04:31",
+      "14/07/2026 06:12",
+      "1h 41 min",
+      "Concluído",
+    ],
+    [
+      "HNV-7E26",
+      "48189",
+      "Ambev",
+      "Fábrica Guarulhos",
+      "CD Recife",
+      "14/07/2026 05:08",
+      "14/07/2026 07:03",
+      "1h 55 min",
+      "Concluído",
+    ],
+    [
+      "PRT-9D51",
+      "48196",
+      "Unilever",
+      "CD Osasco",
+      "Distribuidor Salvador",
+      "14/07/2026 05:44",
+      "14/07/2026 07:32",
+      "1h 48 min",
+      "Concluído",
+    ],
+    [
+      "MGL-4B67",
+      "48203",
+      "P&G",
+      "Planta Louveira",
+      "CD Goiânia",
+      "14/07/2026 06:19",
+      "—",
+      "2h 07 min",
+      "Em andamento",
+    ],
+    [
+      "VKC-2F38",
+      "48211",
+      "Danone",
+      "CD Extrema",
+      "Rede Rio",
+      "14/07/2026 07:02",
+      "—",
+      "1h 36 min",
+      "Em andamento",
+    ],
+  ],
+};
+
+const manutencaoAnalytics: AnalyticalTable = {
+  title: "Analítico de Manutenção por Veículo",
+  description: "Veículos indisponíveis, ordens de serviço e previsão de liberação.",
+  columns: [
+    { label: "Veículo" },
+    { label: "Ordem de serviço" },
+    { label: "Tipo de manutenção" },
+    { label: "Oficina / Filial" },
+    { label: "Entrada" },
+    { label: "Previsão de saída" },
+    { label: "Tempo parado" },
+    { label: "Responsável" },
+    { label: "Status" },
+  ],
+  rows: [
+    [
+      "DFR-5G81",
+      "OS-26147",
+      "Freios",
+      "Oficina Guarulhos",
+      "14/07/2026 01:18",
+      "14/07/2026 08:30",
+      "7h 12 min",
+      "Equipe A",
+      "Em manutenção",
+    ],
+    [
+      "XPT-3C46",
+      "OS-26152",
+      "Sistema elétrico",
+      "Filial Cajamar",
+      "14/07/2026 02:40",
+      "14/07/2026 09:10",
+      "6h 30 min",
+      "Equipe B",
+      "Em manutenção",
+    ],
+    [
+      "JLM-8H29",
+      "OS-26158",
+      "Pneus",
+      "Oficina Osasco",
+      "14/07/2026 04:05",
+      "14/07/2026 09:35",
+      "5h 30 min",
+      "Equipe C",
+      "Aguardando peça",
+    ],
+    [
+      "CQS-6A74",
+      "OS-26161",
+      "Revisão preventiva",
+      "Filial Extrema",
+      "14/07/2026 05:22",
+      "14/07/2026 11:00",
+      "5h 38 min",
+      "Equipe A",
+      "Em manutenção",
+    ],
+    [
+      "WBN-1D53",
+      "OS-26166",
+      "Arrefecimento",
+      "Oficina Campinas",
+      "14/07/2026 06:10",
+      "14/07/2026 13:40",
+      "7h 30 min",
+      "Equipe D",
+      "Em diagnóstico",
+    ],
+  ],
+};
+
 function Card({
   children,
   className = "",
@@ -152,13 +444,15 @@ function Card({
               </DialogDescription>
             </DialogHeader>
             <div className="max-h-[65vh] overflow-auto rounded-xl border border-border">
-              <Table>
+              <Table className="min-w-max">
                 <TableHeader className="sticky top-0 z-10 bg-muted">
                   <TableRow>
                     {analytics.columns.map((column) => (
                       <TableHead
                         key={column.label}
-                        className={column.numeric ? "text-right" : undefined}
+                        className={
+                          column.numeric ? "whitespace-nowrap text-right" : "whitespace-nowrap"
+                        }
                       >
                         {column.label}
                       </TableHead>
@@ -173,8 +467,8 @@ function Card({
                           key={`${rowIndex}-${analytics.columns[cellIndex]?.label}`}
                           className={
                             analytics.columns[cellIndex]?.numeric
-                              ? "text-right tabular-nums"
-                              : undefined
+                              ? "whitespace-nowrap text-right tabular-nums"
+                              : "whitespace-nowrap"
                           }
                         >
                           {cell}
@@ -229,6 +523,7 @@ function TimeMetric({
   target,
   status,
   trend,
+  analytics,
 }: {
   icon: React.ComponentType<{ className?: string; strokeWidth?: number }>;
   title: string;
@@ -237,22 +532,11 @@ function TimeMetric({
   target: string;
   status: Status;
   trend: { direction: "up" | "down" | "flat"; value: string };
+  analytics: AnalyticalTable;
 }) {
   const s = statusStyles[status];
   return (
-    <Card
-      analytics={{
-        title,
-        columns: [{ label: "Campo" }, { label: "Informação" }],
-        rows: [
-          ["Indicador", title],
-          ["Valor atual", `${value} ${unit}`],
-          ["Meta", target],
-          ["Variação", trend.value],
-          ["Status", s.label],
-        ],
-      }}
-    >
+    <Card analytics={analytics}>
       <CardHeader icon={icon} title={title} right={<StatusPill status={status} />} />
       <div className="flex items-baseline gap-1.5">
         <span className="text-5xl font-semibold tracking-tight tabular-nums">{value}</span>
@@ -300,21 +584,98 @@ function OTDRotasCard() {
   return (
     <Card
       analytics={{
-        title: "OTD por Origem × Destino",
+        title: "Analítico de OTD por Origem × Destino",
+        description: "Viagens por veículo, documento e cumprimento do prazo de entrega.",
         columns: [
+          { label: "Veículo" },
+          { label: "MDF-e" },
+          { label: "Cliente" },
           { label: "Origem" },
           { label: "Destino" },
-          { label: "Viagens", numeric: true },
-          { label: "OTD", numeric: true },
+          { label: "Entrega prevista" },
+          { label: "Entrega realizada / previsão" },
+          { label: "Desvio" },
           { label: "Status" },
         ],
-        rows: sorted.map((rota) => [
-          rota.origem,
-          rota.destino,
-          rota.viagens.toString(),
-          `${rota.otd.toFixed(1)}%`,
-          statusStyles[otdStatus(rota.otd)].label,
-        ]),
+        rows: [
+          [
+            "RVM-4A82",
+            "48219",
+            "Nestlé",
+            "Guarulhos",
+            "Fortaleza",
+            "14/07/2026 06:00",
+            "14/07/2026 08:14",
+            "+2h 14 min",
+            "Atrasada",
+          ],
+          [
+            "GHT-7C21",
+            "48227",
+            "Ambev",
+            "Cajamar",
+            "Recife",
+            "14/07/2026 07:30",
+            "14/07/2026 08:42",
+            "+1h 12 min",
+            "Atrasada",
+          ],
+          [
+            "FDP-9B14",
+            "48234",
+            "Unilever",
+            "Osasco",
+            "Salvador",
+            "14/07/2026 09:00",
+            "14/07/2026 09:38",
+            "+38 min",
+            "Atrasada",
+          ],
+          [
+            "TLM-2E63",
+            "48241",
+            "P&G",
+            "Ribeirão Preto",
+            "Goiânia",
+            "14/07/2026 10:20",
+            "14/07/2026 10:20",
+            "No prazo",
+            "Entregue",
+          ],
+          [
+            "QXZ-8D40",
+            "48256",
+            "Danone",
+            "Extrema",
+            "Rio de Janeiro",
+            "14/07/2026 11:10",
+            "14/07/2026 10:52",
+            "-18 min",
+            "Entregue",
+          ],
+          [
+            "LPR-6F18",
+            "48261",
+            "Coca-Cola",
+            "Campinas",
+            "Belo Horizonte",
+            "14/07/2026 12:40",
+            "14/07/2026 12:18",
+            "-22 min",
+            "Entregue",
+          ],
+          [
+            "EJK-3H72",
+            "48268",
+            "Heineken",
+            "São Paulo",
+            "Curitiba",
+            "14/07/2026 13:30",
+            "14/07/2026 13:02",
+            "-28 min",
+            "Entregue",
+          ],
+        ],
       }}
     >
       <CardHeader
@@ -373,13 +734,82 @@ function OTDClienteCard() {
   return (
     <Card
       analytics={{
-        title: "OTD Cliente",
+        title: "Analítico de OTD Cliente por Veículo",
+        description: "Entregas por veículo, cliente e documento consideradas no OTD consolidado.",
         columns: [
-          { label: "Período" },
-          { label: "OTD", numeric: true },
-          { label: "Meta", numeric: true },
+          { label: "Veículo" },
+          { label: "MDF-e" },
+          { label: "Cliente" },
+          { label: "Remetente" },
+          { label: "Destinatário" },
+          { label: "Origem" },
+          { label: "Destino" },
+          { label: "Prazo de entrega" },
+          { label: "Entrega realizada / previsão" },
+          { label: "Status OTD" },
         ],
-        rows: periodos.map((periodo) => [periodo.label, periodo.value, `${meta}%`]),
+        rows: [
+          [
+            "RVM-4A82",
+            "48219",
+            "Nestlé",
+            "CD Cajamar",
+            "Atacadão Fortaleza",
+            "Cajamar",
+            "Fortaleza",
+            "14/07/2026 06:00",
+            "14/07/2026 08:14",
+            "Fora do prazo",
+          ],
+          [
+            "GHT-7C21",
+            "48227",
+            "Ambev",
+            "Fábrica Guarulhos",
+            "CD Recife",
+            "Guarulhos",
+            "Recife",
+            "14/07/2026 07:30",
+            "14/07/2026 08:42",
+            "Fora do prazo",
+          ],
+          [
+            "FDP-9B14",
+            "48234",
+            "Unilever",
+            "CD Osasco",
+            "Distribuidor Salvador",
+            "Osasco",
+            "Salvador",
+            "14/07/2026 09:00",
+            "14/07/2026 08:51",
+            "No prazo",
+          ],
+          [
+            "TLM-2E63",
+            "48241",
+            "P&G",
+            "Planta Louveira",
+            "CD Goiânia",
+            "Louveira",
+            "Goiânia",
+            "14/07/2026 10:20",
+            "14/07/2026 10:03",
+            "No prazo",
+          ],
+          [
+            "QXZ-8D40",
+            "48256",
+            "Danone",
+            "CD Extrema",
+            "Rede Rio",
+            "Extrema",
+            "Rio de Janeiro",
+            "14/07/2026 11:10",
+            "14/07/2026 10:52",
+            "No prazo",
+          ],
+        ],
       }}
     >
       <CardHeader
@@ -443,17 +873,93 @@ function ViagensAtrasadasCard() {
   return (
     <Card
       analytics={{
-        title: "Viagens · Prazo vs Atraso",
+        title: "Analítico de Viagens por Veículo",
+        description: "Veículos monitorados, rota, previsão de chegada e desvio do prazo.",
         columns: [
+          { label: "Veículo" },
+          { label: "MDF-e" },
+          { label: "Cliente" },
+          { label: "Origem" },
+          { label: "Destino" },
+          { label: "Última posição" },
+          { label: "Chegada prevista" },
+          { label: "Chegada realizada / previsão atual" },
+          { label: "Desvio" },
           { label: "Situação" },
-          { label: "Viagens", numeric: true },
-          { label: "Participação", numeric: true },
-          { label: "Comparação" },
         ],
         rows: [
-          ["No prazo", noPrazo.toString(), `${pctPrazo.toFixed(1)}%`, "—"],
-          ["Atrasadas", atrasadas.toString(), `${pctAtraso.toFixed(1)}%`, "-4 atrasadas vs ontem"],
-          ["Total monitorado", total.toString(), "100%", "—"],
+          [
+            "RVM-4A82",
+            "48219",
+            "Nestlé",
+            "Cajamar",
+            "Fortaleza",
+            "BR-116 · Feira de Santana",
+            "14/07/2026 06:00",
+            "14/07/2026 08:14",
+            "+2h 14 min",
+            "Atrasada",
+          ],
+          [
+            "GHT-7C21",
+            "48227",
+            "Ambev",
+            "Guarulhos",
+            "Recife",
+            "BR-101 · Maceió",
+            "14/07/2026 07:30",
+            "14/07/2026 08:42",
+            "+1h 12 min",
+            "Atrasada",
+          ],
+          [
+            "FDP-9B14",
+            "48234",
+            "Unilever",
+            "Osasco",
+            "Salvador",
+            "BR-116 · Vitória da Conquista",
+            "14/07/2026 09:00",
+            "14/07/2026 08:51",
+            "-9 min",
+            "No prazo",
+          ],
+          [
+            "TLM-2E63",
+            "48241",
+            "P&G",
+            "Louveira",
+            "Goiânia",
+            "BR-050 · Uberlândia",
+            "14/07/2026 10:20",
+            "14/07/2026 10:03",
+            "-17 min",
+            "No prazo",
+          ],
+          [
+            "QXZ-8D40",
+            "48256",
+            "Danone",
+            "Extrema",
+            "Rio de Janeiro",
+            "BR-116 · Resende",
+            "14/07/2026 11:10",
+            "14/07/2026 10:52",
+            "-18 min",
+            "No prazo",
+          ],
+          [
+            "LPR-6F18",
+            "48261",
+            "Coca-Cola",
+            "Campinas",
+            "Belo Horizonte",
+            "BR-381 · Pouso Alegre",
+            "14/07/2026 12:40",
+            "14/07/2026 12:18",
+            "-22 min",
+            "No prazo",
+          ],
         ],
       }}
     >
@@ -685,6 +1191,7 @@ function TorreOperacional() {
               target="≤ 2h"
               status="warning"
               trend={{ direction: "up", value: "+8 min" }}
+              analytics={carregamentoAnalytics}
             />
             <TimeMetric
               icon={PackageCheck}
@@ -694,6 +1201,7 @@ function TorreOperacional() {
               target="≤ 2h"
               status="success"
               trend={{ direction: "down", value: "-12 min" }}
+              analytics={descarregamentoAnalytics}
             />
             <TimeMetric
               icon={Wrench}
@@ -703,6 +1211,7 @@ function TorreOperacional() {
               target="≤ 5h"
               status="danger"
               trend={{ direction: "up", value: "+42 min" }}
+              analytics={manutencaoAnalytics}
             />
             <TimeMetric
               icon={Timer}
@@ -712,6 +1221,7 @@ function TorreOperacional() {
               target="≤ 30 min"
               status="warning"
               trend={{ direction: "down", value: "-4 min" }}
+              analytics={emissaoDocumentosAnalytics}
             />
           </section>
 
@@ -725,18 +1235,82 @@ function TorreOperacional() {
             <ViagensAtrasadasCard />
             <Card
               analytics={{
-                title: "Descarga → Novo Carregamento",
+                title: "Analítico de Descarga → Novo Carregamento",
+                description:
+                  "Intervalo por veículo entre o fim da descarga e o próximo carregamento.",
                 columns: [
-                  { label: "Referência" },
-                  { label: "Resultado" },
-                  { label: "Detalhamento" },
-                  { label: "Comparação" },
+                  { label: "Veículo" },
+                  { label: "Filial" },
+                  { label: "MDF-e anterior" },
+                  { label: "Cliente anterior" },
+                  { label: "Fim da descarga" },
+                  { label: "Próximo MDF-e" },
+                  { label: "Próximo cliente" },
+                  { label: "Início do novo carregamento" },
+                  { label: "Tempo de giro" },
+                  { label: "Status" },
                 ],
                 rows: [
-                  ["Consolidado", "9h 12 min", "Meta: ≤ 10h", "-38 min vs semana"],
-                  ["Melhor filial", "Extrema", "6h 40 min", "—"],
-                  ["Pior filial", "Fortaleza", "14h 22 min", "—"],
-                  ["Frota parada", "18 veículos", "3.2% da frota", "—"],
+                  [
+                    "BCD-1K93",
+                    "Extrema",
+                    "48172",
+                    "Nestlé",
+                    "13/07/2026 22:10",
+                    "48244",
+                    "Danone",
+                    "14/07/2026 04:50",
+                    "6h 40 min",
+                    "No alvo",
+                  ],
+                  [
+                    "HNV-7E26",
+                    "Cajamar",
+                    "48189",
+                    "Ambev",
+                    "13/07/2026 23:35",
+                    "48251",
+                    "Unilever",
+                    "14/07/2026 07:58",
+                    "8h 23 min",
+                    "No alvo",
+                  ],
+                  [
+                    "PRT-9D51",
+                    "Guarulhos",
+                    "48196",
+                    "P&G",
+                    "14/07/2026 00:12",
+                    "48263",
+                    "Coca-Cola",
+                    "14/07/2026 09:24",
+                    "9h 12 min",
+                    "No alvo",
+                  ],
+                  [
+                    "MGL-4B67",
+                    "Fortaleza",
+                    "48203",
+                    "Danone",
+                    "13/07/2026 18:20",
+                    "48270",
+                    "Nestlé",
+                    "14/07/2026 08:42",
+                    "14h 22 min",
+                    "Crítico",
+                  ],
+                  [
+                    "VKC-2F38",
+                    "Campinas",
+                    "48211",
+                    "BRF",
+                    "14/07/2026 01:44",
+                    "Pendente",
+                    "—",
+                    "—",
+                    "11h 06 min",
+                    "Aguardando carga",
+                  ],
                 ],
               }}
             >
