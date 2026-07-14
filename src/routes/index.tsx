@@ -1180,21 +1180,6 @@ function TorreOperacional() {
         </div>
 
         <main className="mt-8">
-          {/* Seção 1 · Indicadores de Entrega */}
-          <SectionHeader
-            eyebrow="Nível 1"
-            title="Indicadores de Entrega"
-            description="Visão consolidada de OTD por cliente e por rota"
-          />
-          <section className="mt-4 grid grid-cols-1 items-stretch gap-4 md:grid-cols-5">
-            <div className="h-full md:col-span-2">
-              <OTDClienteCard />
-            </div>
-            <div className="h-full md:col-span-3">
-              <OTDRotasCard />
-            </div>
-          </section>
-
           {/* Seção 2 · Tempos Operacionais */}
           <SectionHeader
             eyebrow="Nível 2"
@@ -1242,6 +1227,21 @@ function TorreOperacional() {
               trend={{ direction: "down", value: "-4 min" }}
               analytics={emissaoDocumentosAnalytics}
             />
+          </section>
+
+          {/* Seção 1 · Indicadores de Entrega */}
+          <SectionHeader
+            eyebrow="Nível 1"
+            title="Indicadores de Entrega"
+            description="Visão consolidada de OTD por cliente e por rota"
+          />
+          <section className="mt-4 grid grid-cols-1 items-stretch gap-4 md:grid-cols-5">
+            <div className="h-full md:col-span-2">
+              <OTDClienteCard />
+            </div>
+            <div className="h-full md:col-span-3">
+              <OTDRotasCard />
+            </div>
           </section>
 
           {/* Seção 3 · Fluxo de Viagens */}
